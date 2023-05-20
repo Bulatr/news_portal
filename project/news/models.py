@@ -1,5 +1,6 @@
 from django.db import models
 from accounts.models import Author
+from django.contrib.auth.models import User
 
 class Type(models.Model):
 
@@ -65,7 +66,8 @@ class Post(models.Model):
     update_time = models.DateTimeField(null=True, blank=True, default=None, auto_now=True)
 
     # может принадлежать только к одному автору
-    author_id = models.ForeignKey(Author, related_name="authors", on_delete=models.CASCADE)
+    # через related_name="posts" можно получить все посты этого автора
+    author_id = models.ForeignKey(Author, related_name="posts", on_delete=models.CASCADE)
 
     rating = models.IntegerField(null=True, blank=True)
 
@@ -115,7 +117,8 @@ class Comment(models.Model):
     rating = models.IntegerField()
 
     # комментарий может быть прикреплен только к одному посту
-    post_id = models.ForeignKey(Post, related_name='posts', on_delete=models.CASCADE)
+    # через comments можно получить все комментарии этого поста
+    post_id = models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE)
 
     class Meta:
         managed = False

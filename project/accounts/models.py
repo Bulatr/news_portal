@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+# from news.models import Post, Comment
 
 # Create your models here.
 
@@ -14,5 +15,12 @@ class Author(models.Model):
         managed = False
         db_table = "news_portal_author"
 
-    def update_rating(self) -> None:
-        pass
+    def update_rating(self):
+        posts = self.posts.all()
+        comments = self.comments.all()
+        articles_rating = posts.aggregate(models.Sum('rating'))['rating__sum'] or 0
+        comments_rating = comments.aggregate(models.Sum('rating'))['rating__sum'] or 0
+        article_comments_rating = self.posts.annotate(comments_rating=models.Sum('comments__rating')).aggregate(models.Sum('comments_rating'))['comments_rating__sum'] or 0
+
+        self.rating = (articles_rating * 3) + comments_rating + article_comments_rating
+        self.save()
