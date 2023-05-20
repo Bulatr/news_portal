@@ -88,6 +88,13 @@ class Post(models.Model):
             self.rating -= 1
             self.save()
 
+    def preview(self):
+        preview_length = 124  # Длина предварительного просмотра
+        if len(self.content_data) <= preview_length:
+            return self.content_data
+        else:
+            return self.content_data[:preview_length] + "..."
+
 
 # Класс промежуточной таблицы реализующей связь многие ко многим
 class PostCategory(models.Model):
