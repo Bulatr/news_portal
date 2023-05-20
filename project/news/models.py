@@ -32,7 +32,7 @@ class Type(models.Model):
 
 class Category(models.Model):
     id = models.AutoField(primary_key=True)
-    category_name = models.TextField()
+    category_name = models.CharField(null=False, blank=False)
     slug = models.SlugField(null=True, blank=True, unique=True, error_messages={"unique": "Этот slug уже используется. Переименуйте заголовок или вручную укажите slug."})
     create_time = models.DateTimeField(auto_now_add=True)
     update_time = models.DateTimeField(null=True, blank=True, default=None, auto_now=True)
@@ -49,7 +49,7 @@ class Category(models.Model):
 
 class Post(models.Model):
     id = models.AutoField(primary_key=True)
-    title = models.TextField(null=False, blank=False)
+    title = models.CharField(null=False, blank=False)
 
     # Используется для урл
     slug = models.SlugField(null=True, blank=True, unique=True, error_messages={"unique": "Этот slug уже используется. Переименуйте заголовок или вручную укажите slug."})
@@ -78,6 +78,16 @@ class Post(models.Model):
         self.slug = self.title.lower().replace(' ', '-')
         super().save(*args, **kwargs)
 
+    def like(self) -> None:
+        if self.rating < 10:
+            self.rating += 1
+            self.save()
+
+    def dislike(self) -> None:
+        if self.rating < 10:
+            self.rating -= 1
+            self.save()
+
 
 # Класс промежуточной таблицы реализующей связь многие ко многим
 class PostCategory(models.Model):
@@ -103,3 +113,13 @@ class Comment(models.Model):
     class Meta:
         managed = False
         db_table = "news_portal_comment"
+
+    def like(self) -> None:
+        if self.rating < 10:
+            self.rating += 1
+            self.save()
+
+    def dislike(self) -> None:
+        if self.rating < 10:
+            self.rating -= 1
+            self.save()
