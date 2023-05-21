@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from transliterate import translit
 
 class Type(models.Model):
 
@@ -21,7 +22,7 @@ class Type(models.Model):
 
     def save(self, *args, **kwargs):
         # Автоматическое создание слага на основе заголовка статьи
-        self.slug = self.title.lower().replace(' ', '-')
+        self.slug = translit(self.title.lower().replace(' ', '-'), 'ru', reversed=True)
         super().save(*args, **kwargs)
 
 
@@ -36,7 +37,7 @@ class Category(models.Model):
 
     def save(self, *args, **kwargs):
         # Автоматическое создание слага на основе заголовка статьи
-        self.slug = self.title.lower().replace(' ', '-')
+        self.slug = translit(self.title.lower().replace(' ', '-'), 'ru', reversed=True)
         super().save(*args, **kwargs)
 
 
@@ -73,7 +74,7 @@ class Post(models.Model):
 
     def save(self, *args, **kwargs):
         # Автоматическое создание слага на основе заголовка статьи
-        self.slug = self.title.lower().replace(' ', '-')
+        self.slug = translit(self.title.lower().replace(' ', '-'), 'ru', reversed=True)
         super().save(*args, **kwargs)
 
     def like(self) -> None:
