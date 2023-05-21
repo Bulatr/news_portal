@@ -1,0 +1,75 @@
+from django.contrib.auth.models import User
+from accounts.models import Author
+
+user = User.objects.create(username='Alex')
+author = Author.objects.create(user=user, rating=0)
+user = User.objects.create(username='john')
+author = Author.objects.create(user=user, rating=5)
+
+from news.models import Post, Category, Comment, Type
+
+category1 = Category.objects.create(title="Политика")
+category2 = Category.objects.create(title="Экономика")
+category3 = Category.objects.create(title="Спорт")
+category4 = Category.objects.create(title="Наука")
+
+article = Type.objects.create(title="Статья")
+news = Type.objects.create(title="Новость")
+
+author1 = Author.objects.get(id=1)
+type_post = Type.objects.get(id=2)
+category1 = Category.objects.get(id=1)
+news1 = Post.objects.create(title="Лавров заявил о начале дедолларизации мировой экономики", content="Министр иностранных дел России Сергей Лавров заявил о начале дедолларизации мировой экономики, отметив, что такая тенденция наблюдается уже не только концептуально, но и на практике.", typepost=type_post, author=author1)
+news1.categories.add(category1, category2)
+news2 = Post.objects.create(title="Правительство усовершенствует меры поддержки промышленности", content="Минэкономразвития с участием Аналитического центра при правительстве нужно до 20 июля проанализировать действующие механизмы поддержки промышленности и представить предложения по их совершенствованию, сообщила пресс-служба кабмина. Соответствующее поручение дал премьер-министр РФ Михаил Мишустин.", typepost=type_post, author=author1)
+news2.categories.add(category2)
+
+type_post1 = Type.objects.get(id=2Post.)
+author2 = Author.objects.get(id=2)
+article1 = Post.objects.create(title="Как выглядит салон большого китайского минивэна Zeekr 009", content="В предыдущем посте автоблогер расставил точки над i в вопросе оформления экстерьера большого китайского «однообъемника». На этот раз он продемонстрировал зрителям салон. Причем главный «вау-эффект» явно произвела работа больших боковых дверей, которые смещаются с помощью сервопривода. Михаил расположился на одном из двух широких кресел второго ряда, нажал на клавишу в кузовной стойке, и вуаля — створка отправилась в плавное движение!", typepost=type_post1, author=author2)
+article1.categories.add(category4)
+
+user1 = User.objects.get(id=1)
+comment1 = Comment.objects.create(text_comment="Комментарий 1", author=user1, post=news1)
+comment2 = Comment.objects.create(text_comment="Комментарий 2", author=user1, post=news1)
+
+user2 = User.objects.get(id=2)
+comment3 = Comment.objects.create(text_comment="Комментарий 3", author=user2, post=news2)
+comment4 = Comment.objects.create(text_comment="Комментарий 4", author=user2, post=article1)
+
+comment1.like()
+comment1.dislike()
+comment2.like()
+comment2.like()
+comment3.like()
+comment4.like()
+comment4.like()
+comment1.like()
+comment2.like()
+comment2.like()
+comment3.dislike()
+comment4.like()
+
+
+news1.like()
+news1.like()
+news2.like()
+news2.like()
+news2.like()
+news2.like()
+news2.dislike()
+article1.like()
+
+author1 = Author.objects.get(id=1)
+author2 = Author.objects.get(id=2)
+Author.update_rating(author1)
+Author.update_rating(author2)
+
+best_username, best_rating = Author.get_best_user()
+print(f'best_user:{best_username}, rating:{best_rating}')
+
+best_post = Post.get_best_post()
+print(best_post)
+
+post = Post.objects.get(id=best_post[0])
+post_comments = post.comments.all()
