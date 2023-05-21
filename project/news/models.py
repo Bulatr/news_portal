@@ -92,6 +92,19 @@ class Post(models.Model):
             return self.content
         else:
             return self.content[:preview_length] + "..."
+        
+    @classmethod
+    def get_best_post(cls):
+        best_post = cls.objects.order_by('-rating').first()
+        if best_post:
+            id_post = best_post.id
+            author_username = best_post.author.user.username
+            create_date = best_post.create_time.date()
+            rating = best_post.rating
+            title = best_post.title
+            preview = best_post.preview()
+            return id_post, create_date, author_username, rating, title, preview
+        return None
 
 
 
