@@ -69,7 +69,7 @@ class Post(models.Model):
     rating = models.IntegerField(null=True, blank=True, default=0)
 
     # связь многие ко многим с категориями
-    categories = models.ManyToManyField(Category)
+    category = models.ManyToManyField(Category)
 
 
     def save(self, *args, **kwargs):
