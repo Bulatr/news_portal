@@ -10,7 +10,7 @@ class PostList(ListView):
     ordering = 'update_time'
     # Указываем имя шаблона, в котором будут все инструкции о том,
     # как именно пользователю должны быть показаны наши объекты
-    template_name = 'post_list.html'
+    template_name = 'post/post_list.html'
     # Это имя списка, в котором будут лежать все объекты.
     # Его надо указать, чтобы обратиться к списку объектов в html-шаблоне.
     context_object_name = 'posts'
