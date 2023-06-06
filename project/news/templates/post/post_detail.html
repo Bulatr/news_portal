@@ -1,5 +1,6 @@
 {% extends 'default.html' %}
 {% block content %}
+    {% load censor_filters %}
     <!-- Page Content -->
     <section id="page-content" class="sidebar-right">
         <div class="container">
@@ -49,7 +50,7 @@
                                             </a>
                                         </div>
                                     </div>
-                                    <p>{{post.content}}</p>
+                                    <p>{{post.content|censor}}</p>
                                 </div>
                                 <div class="post-tags">
                                     <a href="#">Life</a>
