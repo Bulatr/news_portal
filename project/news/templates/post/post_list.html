@@ -1,54 +1,72 @@
 <!--  наследуемся от шаблона default.html -->
 {% extends 'default.html' %}
+
 {% block content %}
-<!-- Page title -->
-<div class="page-title">
-    <h1>Blog Masonry - Three Columns</h1>
-    <div class="breadcrumb float-left">
-        <ul>
-            <li><a href="#">Home</a>
-            </li>
-            <li><a href="#">Blog</a>
-            </li>
-            <li class="active"><a href="#">Three Columns</a>
-            </li>
-        </ul>
-    </div>
-</div>
-<!-- end: Page title -->
-<div id="blog" class="grid-layout post-3-columns m-b-30" data-item="post-item">
-    {% if posts %}
-        {% for post in posts %}
-            <!-- Post item-->
-            <div class="post-item border">
-                <div class="post-item-wrap">
-                    <div class="post-image">
-                        <a href="#">
-                            <img alt="" src="{{STATIC_URL}}images/shop/products/12.jpg">
-                        </a>
-                        <span class="post-meta-category">
-                            {% for category in post.category.all %}
-                        
-                            <a href="">{{category.title}}{% if not forloop.last %}, {% endif %} </a>
-                        
-                            {% endfor %}
-                        </span>
-                    </div>
-                    <div class="post-item-description">
-                        <span class="post-meta-date"><i class="fa fa-calendar-o"></i>{{ post.create_time|date:"d.m.Y" }}</span>
-                        <span class="post-meta-comments"><a href=""><i class="fa fa-comments-o"></i>33 Comments</a></span>
-                        <h2><a href="/posts/{{post.id}}">{{post.title}}
-                            </a></h2>
-                        <p>{{post.preview}}</p>
-                        <a href="#" class="item-link">Read More <i class="icon-chevron-right"></i></a>
-                    </div>
-                </div>
+<section id="page-content">
+    <div class="container">
+        {% block title%}
+        <!-- Page title -->
+        <div class="page-title">
+            <h1>Новости</h1>
+            <div class="breadcrumb float-left">
+                <ul>
+                    <li><a href="/">Главная</a>
+                    </li>
+                    <li class="active"><a href="/posts/">Новости</a>
+                    </li>
+                </ul>
             </div>
-            <!-- end: Post item-->
-        {% endfor %}
-    {% else %}
-        <p>Постов не найдено! </p>
-    {% endif %}
-</div>
+        </div>
+        <!-- end: Page title -->
+        {% endblock %}
+        <div id="blog" class="grid-layout post-3-columns m-b-30" data-item="post-item">
+            {% if posts %}
+                {% for post in posts %}
+                    <!-- Post item-->
+                    <div class="post-item border">
+                        <div class="post-item-wrap">
+                            <div class="post-image">
+                                <a href="#">
+                                    <img alt="" src="{{STATIC_URL}}images/shop/products/12.jpg">
+                                </a>
+                                <span class="post-meta-category">
+                                    {% for category in post.category.all %}
+                                
+                                    <a href="">{{category.title}}{% if not forloop.last %}, {% endif %} </a>
+                                
+                                    {% endfor %}
+                                </span>
+                            </div>
+                            <div class="post-item-description">
+                                <span class="post-meta-date"><i class="fa fa-calendar-o"></i>{{ post.create_time|date:"d.m.Y" }}</span>
+                                <span class="post-meta-comments"><a href=""><i class="fa fa-comments-o"></i>33 Comments</a></span>
+                                <h2><a href="/posts/{{post.id}}">{{post.title}}
+                                    </a></h2>
+                                <p>{{post.preview}}</p>
+                                <a href="/posts/{{post.id}}" class="item-link">Прочитать <i class="icon-chevron-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end: Post item-->
+                {% endfor %}
+            {% else %}
+                <p>Постов не найдено! </p>
+            {% endif %}
+        </div>
+    {% block pagination %}
+        <!-- Pagination -->
+        <ul class="pagination">
+            <li class="page-item"><a class="page-link" href="#"><i class="fa fa-angle-left"></i></a></li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item active"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">4</a></li>
+            <li class="page-item"><a class="page-link" href="#">5</a></li>
+            <li class="page-item"><a class="page-link" href="#"><i class="fa fa-angle-right"></i></a></li>
+        </ul>
+        <!-- end: Pagination -->
+    {% endblock %}
+    </div>
+</section>
 {% endblock %}
 

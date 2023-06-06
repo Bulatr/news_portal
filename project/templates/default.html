@@ -23,53 +23,22 @@
         <!-- Включение header -->
         {% include 'header.html' %}
 
-        <!-- Page title -->
-        <section id="page-title">
-            <div class="container">
-                <div class="page-title">
-                    <h1>Shop</h1>
-                    <span>Sidebar Left</span>
-                </div>
-                <div class="breadcrumb">
-                    <ul>
-                        <li><a href="#">Home</a>
-                        </li>
-                        <li><a href="#">Shop</a>
-                        </li>
-                        <li class="active"><a href="#">Sidebar Left</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-        <!-- end: Page title -->
         <!-- Content -->
-        <section id="page-content">
-            <div class="container">
-                <!-- post content -->
-                
-                <!-- Blog -->
+        {% block content %}
+            <!-- post title -->
+            {% block title%}
+            {% endblock %}
+            <!-- end: Page title -->
+            {% block pagination %}
+            <!-- Pagination -->
+            
+            <!-- end: Pagination -->
+            {% endblock %}
+        {% endblock %}
+            <!-- end: Post item YouTube-->
 
-                    {% block content %}
-
-                    {% endblock %}
-                    <!-- end: Post item YouTube-->
-
-                <!-- end: Blog -->
-                <!-- Pagination -->
-                <ul class="pagination">
-                    <li class="page-item"><a class="page-link" href="#"><i class="fa fa-angle-left"></i></a></li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item active"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">4</a></li>
-                    <li class="page-item"><a class="page-link" href="#">5</a></li>
-                    <li class="page-item"><a class="page-link" href="#"><i class="fa fa-angle-right"></i></a></li>
-                </ul>
-                <!-- end: Pagination -->
-            </div>
-            <!-- end: post content -->
-        </section>
+        <!-- end: Blog -->
+        
         <!-- end: Content -->
         <!-- DELIVERY INFO -->
         <section class="background-grey p-t-40 p-b-0">
