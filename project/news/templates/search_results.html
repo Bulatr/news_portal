@@ -1,0 +1,64 @@
+{% extends 'default.html' %}
+{% block content %}
+<section id="page-content">
+    <div class="container">
+        {% block title%}
+        <!-- Page title -->
+        <div class="page-title">
+            <h1>Новости</h1>
+            <div class="breadcrumb float-left">
+                <ul>
+                    <li><a href="/">Главная</a>
+                    </li>
+                    <li class="active"><a href="/posts/">Новости</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- end: Page title -->
+        {% endblock %}
+        {% load censor_filters %}
+        <div id="blog" class="grid-layout post-3-columns m-b-30" data-item="post-item">
+            {% if posts %}
+                {% for post in posts %}
+                    <!-- Post item-->
+                    <div class="post-item border">
+                        <div class="post-item-wrap">
+                            <div class="post-image">
+                                <a href="#">
+                                    <img alt="" src="{{STATIC_URL}}images/shop/products/12.jpg">
+                                </a>
+                                <span class="post-meta-category">
+                                    {% for category in post.category.all %}
+                                
+                                    <a href="">{{category.title}}{% if not forloop.last %}, {% endif %} </a>
+                                
+                                    {% endfor %}
+                                </span>
+                            </div>
+                            <div class="post-item-description">
+                                <span class="post-meta-date"><i class="fa fa-calendar-o"></i>{{ post.create_time|date:"d.m.Y" }}</span>
+                                <span class="post-meta-comments"><a href=""><i class="fa fa-comments-o"></i>33 Comments</a></span>
+                                <h2><a href="/posts/{{post.id}}">{{post.title}}
+                                    </a></h2>
+                                <p>{{post.content|truncatewords:20|censor}}</p>
+                                <a href="/posts/{{post.id}}" class="item-link">Прочитать <i class="icon-chevron-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end: Post item-->
+                {% endfor %}
+            {% else %}
+                <p>Постов не найдено! </p>
+            {% endif %}
+        </div>
+        
+    {% block pagination %}
+        <!-- Pagination -->
+        <!-- Включение header -->
+        {% include 'pagination.html' %}
+        <!-- end: Pagination -->
+    {% endblock %}
+    </div>
+</section>
+{% endblock %}

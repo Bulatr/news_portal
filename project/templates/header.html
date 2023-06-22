@@ -44,9 +44,10 @@
             <!--End: Logo-->
             <!-- Search -->
             <div id="search"><a id="btn-search-close" class="btn-search-close" aria-label="Close search form"><i class="icon-x"></i></a>
-                <form class="search-form" action="search-results-page.html" method="get">
-                    <input class="form-control" name="q" type="text" placeholder="Type & Search..." />
-                    <span class="text-muted">Start typing & press "Enter" or "ESC" to close</span>
+                <form class="search-form" action="{% url 'search_results' %}" method="get">
+                    {% csrf_token %}
+                    {{ form.q }}
+                    <span class="text-muted">Начните вводить и нажмите "Enter" или "ESC", чтобы закрыть</span>
                 </form>
             </div>
             <!-- end: search -->
