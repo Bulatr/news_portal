@@ -14,6 +14,8 @@ class PostList(ListView):
     # Это имя списка, в котором будут лежать все объекты.
     # Его надо указать, чтобы обратиться к списку объектов в html-шаблоне.
     context_object_name = 'posts'
+    # пагинация
+    paginate_by = 1
 
 class PostDetail(DetailView):
     model = Post

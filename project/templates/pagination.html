@@ -1,0 +1,33 @@
+<!-- Pagination -->
+{% load custom_tags %}
+<ul class="pagination">
+    <!-- Переключение на предыдущую страницу -->
+    {% with current_url=request.path %}
+        {% if page_obj.has_previous %}
+            <li class="page-item"><a class="page-link" href="{% replace_query_param 'page' '1' %}"><i class="fa fa-angle-double-left"></i></a></li>
+        {% endif %}
+        {% if page_obj.has_previous %}
+            <li class="page-item"><a class="page-link" href="{% replace_query_param 'page' page_obj.previous_page_number %}"><i class="fa fa-angle-left"></i></a></li>
+        {% endif %}
+        <!-- Ссылки на отдельные страницы -->
+        {% for num in page_obj.paginator.page_range %}
+            {% with param_name='page' param_value=num %}
+                {% replace_query_param param_name num as current_url_param %}
+                {% if num == page_obj.number %}
+                    <li class="page-item active"><a class="page-link" href="#">{{ num }}</a></li>
+                {% else %}
+                    <li class="page-item"><a class="page-link" href="{{current_url_param}}">{{ num }}</a></li>
+                {% endif %}
+            {% endwith %}
+        {% endfor %}
+        {% if page_obj.has_next %}
+            <!-- Переключение на следующую страницу -->
+            <li class="page-item"><a class="page-link" href="{% replace_query_param 'page' page_obj.next_page_number%}"><i class="fa fa-angle-right"></i></a></li>
+        {% endif %}
+        {% if page_obj.has_next %}
+            <!-- Переключение на следующую страницу -->
+            <li class="page-item"><a class="page-link" href="{% replace_query_param 'page' page_obj.paginator.num_pages  %}"><i class="fa fa-angle-double-right"></i></a></li>
+        {% endif %}
+    {%endwith%}
+</ul>
+<!-- end: Pagination -->
