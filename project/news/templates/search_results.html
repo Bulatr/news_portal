@@ -3,20 +3,11 @@
 
 
 <!-- Page title -->
-<section id="page-title">
-    <div class="container">
-        <div class="page-title" data-animate="fadeInUp" data-animate-delay="1300">
-            <h1>{% block title%}Результаты поиска{% endblock %}</h1>
-        </div>
-        <div class="breadcrumb" data-animate="fadeInUp" data-animate-delay="1300">
-            <ul>
-                <li><a href="#">Home</a> </li>
-                <li><a href="#">Page title</a> </li>
-                <li class="active"><a href="#">Default</a> </li>
-            </ul>
-        </div>
-    </div>
-</section>
+
+{% block title %}
+    Результаты поиска
+{% endblock title %}
+
 <!-- end: Page title -->
 {% block content %}
 
@@ -27,8 +18,28 @@
             <div class="card-body">
                 <form class="search-form form" action="{% url 'news:post_search' %}" method="get">
                     {% csrf_token %}
-                    <input class="form-control" name="q" type="text" placeholder="Введите запрос..." />
-                    <span class="text-muted small">Начните вводить и нажмите "Enter" или "ESC", чтобы закрыть</span>
+                    <div class="form-group">
+                        <input class="form-control" name="q" type="text" placeholder="Введите запрос..." />
+                        <span class="text-muted small">Введите название поста</span>
+                    </div>
+                    <div class="form-group">
+                        <select name="category" id="category">
+                            <option value="">-- Все категории --</option>
+                            {% for category in categories %}
+                            <option value="{{ category.id }}">{{ category.title }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-12 col-lg-2">
+                                <input class="form-control" type="datetime-local" name="date" placeholder="Дата и время">
+                            </div>
+                            <div class="col-12 col-lg-4">
+                                <button type="submit" class="btn btn-primary mb-2">Найти</button>
+                            </div>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
