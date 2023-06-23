@@ -1,22 +1,25 @@
 {% extends 'default.html' %}
-{% block content %}
-<section id="page-content">
+
+
+
+<!-- Page title -->
+<section id="page-title">
     <div class="container">
-        {% block title%}
-        <!-- Page title -->
-        <div class="page-title">
-            <h1>Результаты поиска</h1>
-            <div class="breadcrumb">
-                <ul>
-                    <li><a href="/">Главная</a>
-                    </li>
-                    <li class="active"><a href="/search/">Результаты поиска</a>
-                    </li>
-                </ul>
-            </div>
+        <div class="page-title" data-animate="fadeInUp" data-animate-delay="1300">
+            <h1>{% block title%}Результаты поиска{% endblock %}</h1>
         </div>
-        <!-- end: Page title -->
-        {% endblock %}
+        <div class="breadcrumb" data-animate="fadeInUp" data-animate-delay="1300">
+            <ul>
+                <li><a href="#">Home</a> </li>
+                <li><a href="#">Page title</a> </li>
+                <li class="active"><a href="#">Default</a> </li>
+            </ul>
+        </div>
+    </div>
+</section>
+<!-- end: Page title -->
+{% block content %}
+
         <div class="card float-none">
             <div class="card-header">
                 Поиск
@@ -25,7 +28,7 @@
                 <form class="search-form form" action="{% url 'news:post_search' %}" method="get">
                     {% csrf_token %}
                     <input class="form-control" name="q" type="text" placeholder="Введите запрос..." />
-                    <span class="text-muted">Начните вводить и нажмите "Enter" или "ESC", чтобы закрыть</span>
+                    <span class="text-muted small">Начните вводить и нажмите "Enter" или "ESC", чтобы закрыть</span>
                 </form>
             </div>
         </div>
@@ -75,6 +78,5 @@
         {% include 'pagination.html' %}
         <!-- end: Pagination -->
     {% endblock %}
-    </div>
-</section>
+
 {% endblock %}

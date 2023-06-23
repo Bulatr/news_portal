@@ -20,23 +20,38 @@
 <body>
     <!-- Body Inner -->
     <div class="body-inner">
-        
         <!-- Включение header -->
         {% include 'header.html' %}
-
+        <!-- Page title -->
+        <section id="page-title">
+            <div class="container">
+                <div class="page-title" data-animate="fadeInUp" data-animate-delay="1300">
+                    <h1>{% block title%}Заголовок 1{% endblock %}</h1>
+                </div>
+                <div class="breadcrumb" data-animate="fadeInUp" data-animate-delay="1300">
+                    <ul>
+                        <li><a href="#">Home</a> </li>
+                        <li><a href="#">Page title</a> </li>
+                        <li class="active"><a href="#">Default</a> </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <!-- end: Page title -->
         <!-- Content -->
-        {% block content %}
-            <!-- post title -->
-            {% block title%}
-            {% endblock %}
-            <!-- end: Page title -->
-            {% block pagination %}
-            <!-- Pagination -->
-            
-            <!-- end: Pagination -->
-            {% endblock %}
-        {% endblock %}
-            <!-- end: Post item YouTube-->
+        <section id="page-content">
+            <div class="container">
+                {% block content %}
+
+                    {% block pagination %}
+                    <!-- Pagination -->
+
+                    <!-- end: Pagination -->
+                    {% endblock %}
+                {% endblock %}
+            </div>
+        </section>
+
 
         <!-- end: Blog -->
         
