@@ -5,18 +5,30 @@
         {% block title%}
         <!-- Page title -->
         <div class="page-title">
-            <h1>Новости</h1>
-            <div class="breadcrumb float-left">
+            <h1>Результаты поиска</h1>
+            <div class="breadcrumb">
                 <ul>
                     <li><a href="/">Главная</a>
                     </li>
-                    <li class="active"><a href="/posts/">Новости</a>
+                    <li class="active"><a href="/search/">Результаты поиска</a>
                     </li>
                 </ul>
             </div>
         </div>
         <!-- end: Page title -->
         {% endblock %}
+        <div class="card float-none">
+            <div class="card-header">
+                Поиск
+            </div>
+            <div class="card-body">
+                <form class="search-form form" action="{% url 'news:post_search' %}" method="get">
+                    {% csrf_token %}
+                    <input class="form-control" name="q" type="text" placeholder="Введите запрос..." />
+                    <span class="text-muted">Начните вводить и нажмите "Enter" или "ESC", чтобы закрыть</span>
+                </form>
+            </div>
+        </div>
         {% load censor_filters %}
         <div id="blog" class="grid-layout post-3-columns m-b-30" data-item="post-item">
             {% if posts %}
@@ -46,10 +58,14 @@
                             </div>
                         </div>
                     </div>
+                    {% empty %}
+                        <p>Нет результатов</p>
                     <!-- end: Post item-->
                 {% endfor %}
             {% else %}
+            <div class="post-item border">
                 <p>Постов не найдено! </p>
+            </div>
             {% endif %}
         </div>
         

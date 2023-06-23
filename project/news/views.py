@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from .models import Post, Category
 from .forms import SearchForm
+from .filters import PostFilter
 
 # Create your views here.
 class PostList(ListView):
@@ -25,11 +26,12 @@ class PostDetail(DetailView):
 
 class PostSearchView(ListView):
     model = Post
-    template_name = 'products/search_results.html'  # Укажите путь к вашему шаблону результатов поиска
-    context_object_name = 'products'
+    template_name = 'search_results.html'  # Укажите путь к вашему шаблону результатов поиска
+    context_object_name = 'posts'
 
     def get_queryset(self):
         query = self.request.GET.get('q')
         if query:
-            return Product.objects.filter(name__icontains=query)
-        return Product.objects.all()
+            queryset = Post.objects.filter(title__icontains=query)
+            return queryset
+        return Post.objects.all()
