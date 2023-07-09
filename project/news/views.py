@@ -1,10 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView
 from .models import Post, Category
-from .forms import SearchForm
+from .forms import SearchForm, PostForm
 from .filters import PostFilter
 from django.utils import timezone
 from datetime import datetime
+from django.views.generic import (
+    ListView, DetailView, CreateView, UpdateView, DeleteView
+)
+from django.urls import reverse_lazy
 
 # Create your views here.
 class PostList(ListView):
@@ -55,3 +59,34 @@ class PostSearchView(ListView):
         context = super().get_context_data(**kwargs)
         context['categories'] = Category.objects.all()
         return context
+    
+# Обработка данных формы
+def create_post(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = form.save()
+            post_id = post.id
+            # Дополнительные действия после сохранения формы
+            return redirect('post/post_detail', post_id=post_id)
+    else:
+        form = PostForm()
+    return render(request, 'post/post_create.html', {'form': form})
+
+def update_post(request, post_id):
+    post = Post.objects.get(id=post_id)
+    if request.method == 'POST':
+        form = PostForm(request.POST, instance=post)
+        if form.is_valid():
+            form.save()
+            # после сохранения перенапрвляется на страницу товара
+            return redirect('post/post_detail', post_id=post_id)
+            # Дополнительные действия после сохранения формы
+    else:
+        form = PostForm(instance=post)
+    return render(request, 'post/post_update.html', {'form': form})
+
+class PostDelete(DeleteView):
+    model = Post
+    template_name = 'post/post_delete.html'
+    success_url = reverse_lazy('post/post_list')

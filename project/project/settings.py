@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'accounts',
     'menu',
     'django_filters',
+    'bootstrap4',
 ]
 
 MIDDLEWARE = [

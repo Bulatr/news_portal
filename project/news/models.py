@@ -71,6 +71,10 @@ class Post(models.Model):
     # связь многие ко многим с категориями
     category = models.ManyToManyField(Category)
 
+    # метод дающий строку представления
+    def __str__(self):
+        return f"{self.title} ({self.category})"
+
 
     def save(self, *args, **kwargs):
         # Автоматическое создание слага на основе заголовка статьи
